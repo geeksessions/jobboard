@@ -9,14 +9,12 @@ type Oportunity implements Node {
   id: ID!
   raw: String!
   links: [String!]
-  poster: String!
+  poster(where: PosterWhereInput): Poster!
 }
 
-type Post implements Node {
+type Poster implements Node {
   id: ID!
-  isPublished: Boolean!
-  title: String!
-  text: String!
+  name: String!
 }
 
 
@@ -28,7 +26,7 @@ type AggregateOportunity {
   count: Int!
 }
 
-type AggregatePost {
+type AggregatePoster {
   count: Int!
 }
 
@@ -46,18 +44,18 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post!
   createOportunity(data: OportunityCreateInput!): Oportunity!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  createPoster(data: PosterCreateInput!): Poster!
   updateOportunity(data: OportunityUpdateInput!, where: OportunityWhereUniqueInput!): Oportunity
-  deletePost(where: PostWhereUniqueInput!): Post
+  updatePoster(data: PosterUpdateInput!, where: PosterWhereUniqueInput!): Poster
   deleteOportunity(where: OportunityWhereUniqueInput!): Oportunity
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  deletePoster(where: PosterWhereUniqueInput!): Poster
   upsertOportunity(where: OportunityWhereUniqueInput!, create: OportunityCreateInput!, update: OportunityUpdateInput!): Oportunity!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
+  upsertPoster(where: PosterWhereUniqueInput!, create: PosterCreateInput!, update: PosterUpdateInput!): Poster!
   updateManyOportunities(data: OportunityUpdateInput!, where: OportunityWhereInput!): BatchPayload!
-  deleteManyPosts(where: PostWhereInput!): BatchPayload!
+  updateManyPosters(data: PosterUpdateInput!, where: PosterWhereInput!): BatchPayload!
   deleteManyOportunities(where: OportunityWhereInput!): BatchPayload!
+  deleteManyPosters(where: PosterWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -93,8 +91,8 @@ type OportunityConnection {
 
 input OportunityCreateInput {
   raw: String!
-  poster: String!
   links: OportunityCreatelinksInput
+  poster: PosterCreateOneInput!
 }
 
 input OportunityCreatelinksInput {
@@ -120,8 +118,6 @@ enum OportunityOrderByInput {
   id_DESC
   raw_ASC
   raw_DESC
-  poster_ASC
-  poster_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -132,7 +128,6 @@ type OportunityPreviousValues {
   id: ID!
   raw: String!
   links: [String!]
-  poster: String!
 }
 
 type OportunitySubscriptionPayload {
@@ -172,8 +167,8 @@ input OportunitySubscriptionWhereInput {
 
 input OportunityUpdateInput {
   raw: String
-  poster: String
   links: OportunityUpdatelinksInput
+  poster: PosterUpdateOneInput
 }
 
 input OportunityUpdatelinksInput {
@@ -295,59 +290,7 @@ input OportunityWhereInput {
   All values not ending with the given string.
   """
   raw_not_ends_with: String
-  poster: String
-  """
-  All values that are not equal to given value.
-  """
-  poster_not: String
-  """
-  All values that are contained in given list.
-  """
-  poster_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  poster_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  poster_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  poster_lte: String
-  """
-  All values greater than the given value.
-  """
-  poster_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  poster_gte: String
-  """
-  All values containing the given string.
-  """
-  poster_contains: String
-  """
-  All values not containing the given string.
-  """
-  poster_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  poster_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  poster_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  poster_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  poster_not_ends_with: String
+  poster: PosterWhereInput
 }
 
 input OportunityWhereUniqueInput {
@@ -379,7 +322,7 @@ type PageInfo {
 """
 A connection to a list of items.
 """
-type PostConnection {
+type PosterConnection {
   """
   Information to aid in pagination.
   """
@@ -387,68 +330,65 @@ type PostConnection {
   """
   A list of edges.
   """
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
+  edges: [PosterEdge]!
+  aggregate: AggregatePoster!
 }
 
-input PostCreateInput {
-  isPublished: Boolean!
-  title: String!
-  text: String!
+input PosterCreateInput {
+  name: String!
+}
+
+input PosterCreateOneInput {
+  create: PosterCreateInput
+  connect: PosterWhereUniqueInput
 }
 
 """
 An edge in a connection.
 """
-type PostEdge {
+type PosterEdge {
   """
   The item at the end of the edge.
   """
-  node: Post!
+  node: Poster!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum PostOrderByInput {
+enum PosterOrderByInput {
   id_ASC
   id_DESC
-  isPublished_ASC
-  isPublished_DESC
-  title_ASC
-  title_DESC
-  text_ASC
-  text_DESC
+  name_ASC
+  name_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type PostPreviousValues {
+type PosterPreviousValues {
   id: ID!
-  isPublished: Boolean!
-  title: String!
-  text: String!
+  name: String!
 }
 
-type PostSubscriptionPayload {
+type PosterSubscriptionPayload {
   mutation: MutationType!
-  node: Post
+  node: Poster
   updatedFields: [String!]
-  previousValues: PostPreviousValues
+  previousValues: PosterPreviousValues
 }
 
-input PostSubscriptionWhereInput {
+input PosterSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [PostSubscriptionWhereInput!]
+  AND: [PosterSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [PostSubscriptionWhereInput!]
+  OR: [PosterSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -465,24 +405,39 @@ input PostSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: PostWhereInput
+  node: PosterWhereInput
 }
 
-input PostUpdateInput {
-  isPublished: Boolean
-  title: String
-  text: String
+input PosterUpdateDataInput {
+  name: String
 }
 
-input PostWhereInput {
+input PosterUpdateInput {
+  name: String
+}
+
+input PosterUpdateOneInput {
+  create: PosterCreateInput
+  connect: PosterWhereUniqueInput
+  delete: Boolean
+  update: PosterUpdateDataInput
+  upsert: PosterUpsertNestedInput
+}
+
+input PosterUpsertNestedInput {
+  update: PosterUpdateDataInput!
+  create: PosterCreateInput!
+}
+
+input PosterWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [PostWhereInput!]
+  AND: [PosterWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [PostWhereInput!]
+  OR: [PosterWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -536,130 +491,72 @@ input PostWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
-  isPublished: Boolean
+  name: String
   """
   All values that are not equal to given value.
   """
-  isPublished_not: Boolean
-  title: String
-  """
-  All values that are not equal to given value.
-  """
-  title_not: String
+  name_not: String
   """
   All values that are contained in given list.
   """
-  title_in: [String!]
+  name_in: [String!]
   """
   All values that are not contained in given list.
   """
-  title_not_in: [String!]
+  name_not_in: [String!]
   """
   All values less than the given value.
   """
-  title_lt: String
+  name_lt: String
   """
   All values less than or equal the given value.
   """
-  title_lte: String
+  name_lte: String
   """
   All values greater than the given value.
   """
-  title_gt: String
+  name_gt: String
   """
   All values greater than or equal the given value.
   """
-  title_gte: String
+  name_gte: String
   """
   All values containing the given string.
   """
-  title_contains: String
+  name_contains: String
   """
   All values not containing the given string.
   """
-  title_not_contains: String
+  name_not_contains: String
   """
   All values starting with the given string.
   """
-  title_starts_with: String
+  name_starts_with: String
   """
   All values not starting with the given string.
   """
-  title_not_starts_with: String
+  name_not_starts_with: String
   """
   All values ending with the given string.
   """
-  title_ends_with: String
+  name_ends_with: String
   """
   All values not ending with the given string.
   """
-  title_not_ends_with: String
-  text: String
-  """
-  All values that are not equal to given value.
-  """
-  text_not: String
-  """
-  All values that are contained in given list.
-  """
-  text_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  text_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  text_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  text_lte: String
-  """
-  All values greater than the given value.
-  """
-  text_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  text_gte: String
-  """
-  All values containing the given string.
-  """
-  text_contains: String
-  """
-  All values not containing the given string.
-  """
-  text_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  text_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  text_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  text_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  text_not_ends_with: String
+  name_not_ends_with: String
 }
 
-input PostWhereUniqueInput {
+input PosterWhereUniqueInput {
   id: ID
 }
 
 type Query {
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   oportunities(where: OportunityWhereInput, orderBy: OportunityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Oportunity]!
-  post(where: PostWhereUniqueInput!): Post
+  posters(where: PosterWhereInput, orderBy: PosterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poster]!
   oportunity(where: OportunityWhereUniqueInput!): Oportunity
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  poster(where: PosterWhereUniqueInput!): Poster
   oportunitiesConnection(where: OportunityWhereInput, orderBy: OportunityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OportunityConnection!
+  postersConnection(where: PosterWhereInput, orderBy: PosterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PosterConnection!
   """
   Fetches an object given its ID
   """
@@ -670,6 +567,6 @@ type Query {
 }
 
 type Subscription {
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   oportunity(where: OportunitySubscriptionWhereInput): OportunitySubscriptionPayload
+  poster(where: PosterSubscriptionWhereInput): PosterSubscriptionPayload
 }

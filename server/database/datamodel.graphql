@@ -1,14 +1,11 @@
-type Post {
-  id: ID! @unique
-  isPublished: Boolean!
-  title: String!
-  text: String!
-}
-
-
 type Oportunity {
   id: ID! @unique
   raw: String!
   links: [String!]
-  poster: String!
+  poster: Poster!
+}
+
+type Poster {
+  id: ID! @unique
+  name: String!
 }
