@@ -19,11 +19,11 @@ function Poster () {
   }
 }
 
-
 const DB = {
   PouchDB,
   name: 'meow',
-  db: myDB, 
+  db: myDB,
+  remote: remoteDB,
   init: () => {
     return myDB.sync(remoteDB, {live: true});
   }
