@@ -3,7 +3,6 @@ import './App.css';
 import Home from './Views/Home'
 import DB from './data'
 
-DB.init();
 window.DB = DB;
 
 class App extends Component {

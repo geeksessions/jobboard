@@ -9,9 +9,16 @@ services:
       - "3000:3000"
     depends_on: 
       - db
+    environment:
+    - COUCHDB_USER=moo
+    - COUCHDB_PASSWORD=moo
   db:
     image: couchdb:2
+    environment:
+      - COUCHDB_USER=moo
+      - COUCHDB_PASSWORD=moo
     ports: 
       - "5984:5984"
     volumes:
       - "./db_data:/opt/couchdb/data"
+      - /opt/couchdb/etc
