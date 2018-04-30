@@ -9,7 +9,7 @@ export default class Home extends Component {
     this.setupDataListening()
 
     this.state = {
-      jobs: []
+      jobs: [{id:"miguel"},{id:"jorge"}]
     }
   }
 

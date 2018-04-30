@@ -1,13 +1,14 @@
 version: "3"
 services:
   ui:
-    image: node:8-alpine
+    build: .
     volumes:
-      - "./:/app/"
-    working_dir: "/app"
-    command: "npm start"
+      - .:/app
+      - /app/node_modules
     ports: 
       - "3000:3000"
+    depends_on: 
+      - db
   db:
     image: couchdb:2
     ports: 

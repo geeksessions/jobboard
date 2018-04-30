@@ -8,7 +8,7 @@ function Job () {
   return {
     id: 1,
     raw: 'hcueihfgeuorhfioerhfier',
-    Poster: "miguelcoquet",
+    poster: "miguelcoquet",
     links: []
   }
 }
