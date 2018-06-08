@@ -1,37 +1,16 @@
-import React, { Component } from 'react'
-import DB from '../data'
+import React from 'react'
+import { connect } from 'react-redux'
 
-
-export default class Home extends Component {
-
-  constructor(props) {
-    super(props)
-    this.setupDataListening()
-    this.updateData()
-
-    this.state = {
-      jobs: []
-    }
-  }
-
-  setupDataListening = () => {
-    return DB.link.on("change",this.updateData)
-  }
-
-  updateData = () => {
-    return DB.db.allDocs({include_docs: true}).then((response) => {
-      this.setState({
-        jobs: response.rows
-      })
-    })
-  }
+class Home extends React.Component {
 
   renderJobList = () => {
-    if (this.state.jobs.length === 0) {
+    let jobs = this.props.jobs || []
+
+    if (jobs.length === 0) {
       return (<p> No data to Show ... bitches.  </p>)
     }
 
-    return this.state.jobs.map((job, i) => {
+    return jobs.map((job, i) => {
       return <div key={i} className="border-bottom p1"> {job.id} </div>
     })
   }
@@ -59,4 +38,14 @@ export default class Home extends Component {
       </div>
     </div>)
   }
-} 
+}
+
+const mapStateToProps = (state) => {
+  return {
+    jobs: state.jobs
+  }
+}
+
+const ConnectedHome = connect(mapStateToProps)(Home)
+
+export default ConnectedHome

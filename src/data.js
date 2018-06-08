@@ -19,16 +19,31 @@ const myDB = PouchDB('jobboard')
 //   }
 // }
 
+const setupDataListening = (link, dispatch) => {
+  return link.on('change', (changeObj) => {
+    DB.db.allDocs({include_docs: true}).then((response) => {
+      dispatch({type: 'DATA_CHANGE', data: response.rows})
+    })
+  })
+}
+
 var link = myDB.sync(remoteDB, {
   live: true,
   retry: true
-});
+})
 
 const DB = {
   PouchDB,
   name: 'meow',
   db: myDB,
   remote: remoteDB,
+  attachStore: (store) => {
+    setupDataListening(link, store.dispatch)
+    // TODO
+    // DB.db.allDocs({include_docs: true}).then((response) => {
+    //   store.dispatch({type: 'DATA_CHANGE', data: response.rows})
+    // })
+  },
   link
 }
 
