@@ -21,9 +21,7 @@ const myDB = PouchDB('jobboard')
 
 const setupDataListening = (link, dispatch) => {
   return link.on('change', (changeObj) => {
-    DB.db.allDocs({include_docs: true}).then((response) => {
-      dispatch({type: 'DATA_CHANGE', data: response.rows})
-    })
+    pullJobsAndPushToRedux(myDB, dispatch)
   })
 }
 
@@ -32,6 +30,12 @@ var link = myDB.sync(remoteDB, {
   retry: true
 })
 
+const pullJobsAndPushToRedux = (db, dispatch) => {
+  db.allDocs({include_docs: true}).then((response) => {
+    dispatch({type: 'DATA_CHANGE', data: response.rows})
+  })
+}
+
 const DB = {
   PouchDB,
   name: 'meow',
@@ -39,10 +43,7 @@ const DB = {
   remote: remoteDB,
   attachStore: (store) => {
     setupDataListening(link, store.dispatch)
-    // TODO
-    // DB.db.allDocs({include_docs: true}).then((response) => {
-    //   store.dispatch({type: 'DATA_CHANGE', data: response.rows})
-    // })
+    pullJobsAndPushToRedux(myDB, store.dispatch)
   },
   link
 }
