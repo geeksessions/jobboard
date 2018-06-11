@@ -22,3 +22,4 @@ services:
     volumes:
       - "./db_data:/opt/couchdb/data"
       - /opt/couchdb/etc
+      - "./config/cors.ini:/opt/couchdb/etc/local.d/cors.ini"
