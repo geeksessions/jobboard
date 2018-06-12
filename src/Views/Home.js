@@ -18,25 +18,24 @@ class Home extends React.Component {
   }
 
   render() {
-    return (<div className="clearfix p2">
-      <div className="col col-4 p2 bg-white border rounded" >
-        <div>
-          <img alt="" className="circle" src="http://placekitten.com/g/200/200" />
-          
-          <div className="h3">Hi i'm a job cat, boo!</div>
-          I'm here to help you get your next job inside the GeekSessions Community.
-        
-        </div>
-        <div>
-          <input className="input col col-10" placeholder="Try searching for a position, a technology or a company..."/>
-        </div>
-      </div>
-      <div className="col col-8 p2" >
-        <div className="clearfix p2">
+    return (
+      <div className="home">
+        <aside className="home__sidebar">
+          <img className="home__logo" alt="geeksessions"  src="./images/geeksessions.jpg" />
+          <h1 className="home__title">GeekSessions Job board!</h1>
+          <h5 className="home__subtitle">Maybe your next job is listed here :D</h5>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur maiores beatae commodi ratione id harum excepturi perspiciatis blanditiis repudiandae aliquid!</p>
+        </aside>
+        <div className="home__list">
+          <header className="home__list-header">
+            <label htmlFor="filterInput">Filter:</label>
+            <input type="text" name="filterInput" id="filterInput" className="home__filter"
+              placeholder="Position, technology or company" />
+          </header>
           {this.renderJobList()}
         </div>
       </div>
-    </div>)
+    )
   }
 }
 
