@@ -1,17 +1,19 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+
+import JobCard from '../Components/JobCard';
 
 class Home extends React.Component {
 
   renderJobList = () => {
-    let jobs = this.props.jobs || []
+    let jobs = this.props.jobs;
 
     if (jobs.length === 0) {
       return (<p> No data to Show ... bitches.  </p>)
     }
 
     return jobs.map((job, i) => {
-      return <div key={i} className="border-bottom p1"> {job.id} </div>
+      return <JobCard job={job} key={i} />
     })
   }
 
@@ -30,10 +32,8 @@ class Home extends React.Component {
         </div>
       </div>
       <div className="col col-8 p2" >
-        <div>
-          {
-            this.renderJobList()
-          }
+        <div className="clearfix p2">
+          {this.renderJobList()}
         </div>
       </div>
     </div>)
