@@ -37,17 +37,23 @@ class JobCard extends React.Component {
 
   render() {
     let job = this.props.job.doc;
+    let moment = require('moment');
+    moment().format();
+
+    let day = moment.unix(job.date).fromNow();
+
     return (
       <article className={this.state.active ? "jobcard jobcard--active" : "jobcard"} onClick={this.clickHandler}>
-        <a href={"#" + job._id} className="jobcard_anchor">
-          <header>
+        <a href={"#" + job._id} className="jobcard__anchor">
+          <header className="jobcard__header">
             <author className="jobcard__author">
               {job.poster}
             </author>
+            <time datetime={job.date}>{day}</time>
           </header>
           <div className="jobcard__content">
             <p className="jobcard__text">{job.raw}</p>
-            <footer>
+            <footer className="jobcard__footer">
               {this.getLinks(job.links)}
             </footer>
             <div className="jobcard__overlay">

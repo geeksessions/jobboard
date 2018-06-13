@@ -9,7 +9,7 @@ class Home extends React.Component {
     let jobs = this.props.jobs;
 
     if (jobs.length === 0) {
-      return (<p> No data to Show ... bitches.  </p>)
+      return (<p> No data to Show... bitches.  </p>)
     }
 
     return jobs.map((job, i) => {
