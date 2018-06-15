@@ -14,11 +14,20 @@ body {
 }
 
 .home__sidebar {
-    width: 30%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    width: 25%;
     padding: 5vh 50px;
     
     text-align: center;
     background-color: #d1d2d4;
+}
+
+.home__logo {
+    max-width: 100%;
 }
 
 .home__title {
@@ -34,6 +43,7 @@ body {
 }
 
 .home__list {
+    width: 75%;
     min-height: 100%;
     padding: 15px 50px;
     overflow-y: scroll;
@@ -52,8 +62,35 @@ body {
     margin-left: 10px;
 }
 
- /* JobCards */
+.home__footer {
+    align-self: flex-end;
+}
 
+.home__social {
+    padding-left: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+.home__social-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.home__social-link {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+
+    transform: translateY(0);
+    translate: transform ease-in-out 500ms;
+}
+
+.home__social-link:hover {
+    transform: translateY(-5px);
+}
+
+ /* JobCards */
 .jobcard {
     position: relative;
 
@@ -63,15 +100,24 @@ body {
     cursor: pointer;
 }
 
+/* TODO: Make this more BEM friendly */
+.jobcard small {
+    padding-left: 5px;
+    
+    font-style: italic;
+    color: #4d4b4b;
+}
+
 .jobcard__anchor {
-    color: #212121;
-    text-decoration: none;
+    display: inline-block;
+    margin-left: 10px;
+    color: #4d4b4b;
 }
 
 .jobcard__header {
     display: flex;
     height: 40px;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 15px;
 
@@ -147,3 +193,48 @@ body {
 
     white-space: normal;
 }
+
+.jobcard--no-links {
+    cursor: default;
+}
+
+.jobcard--no-links .jobcard__overlay {
+    display: none;
+}
+
+ /* Media Queries Sugar*/
+ @media only screen and (max-width: 1023px) {
+    .home {
+        display: block;
+    } 
+
+    .home__sidebar,
+    .home__list {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .home__logo {
+        max-width: 150px;
+    }
+
+ }
+
+ @media only screen and (max-width: 768px) {
+
+    .jobcard__footer {       
+        white-space: normal; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .jobcard__links {
+        list-style-type: none;
+        padding-left: 5px;
+    }
+
+    .jobcard__link{
+        display: inline-block;
+        margin-bottom: 10px;
+    }   
+ }

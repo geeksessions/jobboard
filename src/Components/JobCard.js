@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class JobCard extends React.Component {
   constructor(props) {
@@ -9,12 +10,11 @@ class JobCard extends React.Component {
     }
   }
 
-  getLinks = (links) => {
-    
-    if(links.length) {
-      let link = links.map((link) => {
+  getLinks = (id, links) => {
+    if(links.length !== 0) {
+      let link = links.map((link, index) => {
         return (
-          <li><a className="jobcard__link" target="_blank" href={link}>{link}</a></li>
+          <li key={id + "-link-" + index }><a className="jobcard__link" target="_blank" href={link}>{link}</a></li>
         )
       });
 
@@ -27,9 +27,23 @@ class JobCard extends React.Component {
         </div>
       );
     }
-    return null;
 
+    return null;
   }
+
+  getClasses = (active, links) => {
+    let classes = "";
+
+    if (active) {
+      classes += "jobcard--active ";
+    }
+
+    if (links.length === 0) {
+      classes += "jobcard--no-links"
+    }
+
+    return classes;
+  } 
 
   clickHandler = () => {
     this.setState({active: !this.state.active});
@@ -37,33 +51,34 @@ class JobCard extends React.Component {
 
   render() {
     let job = this.props.job.doc;
-    let moment = require('moment');
+  //  let moment = require('moment');
     moment().format();
 
     let day = moment.unix(job.date).fromNow();
 
     return (
-      <article className={this.state.active ? "jobcard jobcard--active" : "jobcard"} onClick={this.clickHandler}>
-        <a href={"#" + job._id} className="jobcard__anchor">
-          <header className="jobcard__header">
-            <author className="jobcard__author">
-              {job.poster}
-            </author>
-            <time datetime={job.date}>{day}</time>
-          </header>
-          <div className="jobcard__content">
-            <p className="jobcard__text">{job.raw}</p>
-            <footer className="jobcard__footer">
-              {this.getLinks(job.links)}
-            </footer>
-            <div className="jobcard__overlay">
-              <p className="jobcard__overlay-text">
-                Click to view more
-              </p>
-            </div>
+      <article className={"jobcard " + this.getClasses(this.state.active, job.links)} onClick={this.clickHandler}>
+        <header className="jobcard__header">
+          <address className="jobcard__author">
+            {job.poster}
+          </address>
+          <small>
+            <time dateTime={job.date}>{day}</time>
+            <a href={"#" + job._id} className="jobcard__anchor">permalink</a>              
+          </small>            
+        </header>
+        <div className="jobcard__content">
+          <p className="jobcard__text">{job.raw}</p>
+          <footer className="jobcard__footer">
+            {this.getLinks(job._id, job.links)}
+          </footer>
+          <div className="jobcard__overlay">
+            <p className="jobcard__overlay-text">
+              Click to view more
+            </p>
           </div>
-        </a>
-        </article>
+        </div>
+      </article>
     )
   }
 }
