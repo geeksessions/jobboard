@@ -10,7 +10,7 @@ class JobCard extends React.Component {
     }
   }
 
-  getLinks = (id, links) => {
+  getLinks = (id, links = []) => {
     if(links.length !== 0) {
       let link = links.map((link, index) => {
         return (
@@ -31,7 +31,7 @@ class JobCard extends React.Component {
     return null;
   }
 
-  getClasses = (active, links) => {
+  getClasses = (active, links = []) => {
     let classes = "";
 
     if (active) {
@@ -51,7 +51,6 @@ class JobCard extends React.Component {
 
   render() {
     let job = this.props.job.doc;
-  //  let moment = require('moment');
     moment().format();
 
     let day = moment.unix(job.date).fromNow();
