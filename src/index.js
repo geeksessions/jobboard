@@ -7,8 +7,8 @@ import App from './App'
 
 import DB from './data'
 
-const myReducers = (previousSate = { jobs: [{id: 'lala jorge'}] }, action = false) => {
-  let newState = Object.assign({}, previousSate)
+const myReducers = (previousSate = { jobs: [] }, action = false) => {
+  let newState = Object.assign({}, previousSate);
   switch (action.type) {
     case 'DATA_CHANGE':
       newState.jobs = action.data

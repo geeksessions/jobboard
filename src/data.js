@@ -32,7 +32,13 @@ var link = myDB.sync(remoteDB, {
 
 const pullJobsAndPushToRedux = (db, dispatch) => {
   db.allDocs({include_docs: true}).then((response) => {
-    dispatch({type: 'DATA_CHANGE', data: response.rows})
+
+    // Sorr
+    const results = response.rows.sort((a, b) => {
+      return a.doc.date - b.doc.date;
+    }).reverse();
+
+    dispatch({type: 'DATA_CHANGE', data: results})
   })
 }
 
