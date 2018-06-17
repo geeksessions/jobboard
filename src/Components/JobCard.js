@@ -53,16 +53,16 @@ class JobCard extends React.Component {
     let job = this.props.job.doc;
     moment().format();
 
-    let day = moment.unix(job.date).fromNow();
+    let day = moment.unix(job.timestamp).fromNow();
 
     return (
       <article className={"jobcard " + this.getClasses(this.state.active, job.links)} onClick={this.clickHandler}>
         <header className="jobcard__header">
           <address className="jobcard__author">
-            {job.poster}
+            {job.author_name}
           </address>
           <small>
-            <time dateTime={job.date}>{day}</time>
+            <time dateTime={job.timestamp}>{day}</time>
             <a href={"#" + job._id} className="jobcard__anchor">permalink</a>              
           </small>            
         </header>
