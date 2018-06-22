@@ -7,13 +7,30 @@ import App from './App'
 
 import DB from './data'
 
-const myReducers = (previousSate = { jobs: [] }, action = false) => {
+const myReducers = (previousSate = { jobs: [], sort: '1'}, action = false) => {
   let newState = Object.assign({}, previousSate);
   switch (action.type) {
+
     case 'DATA_CHANGE':
-      newState.jobs = action.data
-      break
-    default: break
+      newState.jobs = action.payload;
+      break;
+    
+    case 'toggle_sort':
+      newState.sort = action.payload;
+      break;
+
+    case 'toggle_sort_by_poster':
+    
+      let stepCounter = ++previousSate.sortPoster;
+
+      if (stepCounter > 3) {
+        stepCounter = 1;
+      }
+      
+      newState.sortPoster = stepCounter;
+      break;
+    
+    default: break;
   }
 
   return newState
