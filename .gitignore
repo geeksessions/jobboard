@@ -6,8 +6,10 @@ node_modules
 
 # testing
 coverage
+
 # production
 build
+
 .netlify
 
 # misc
@@ -17,7 +19,7 @@ npm-debug.log
 #IDE
 .idea/*
 *.swp
-.vscode# See https://help.github.com/ignore-files/ for more about ignoring files.
+.vscode
 
 # dependencies
 /node_modules
