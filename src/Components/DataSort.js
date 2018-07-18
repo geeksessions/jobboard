@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const DataSort = (props) => {
     return (
         <div>
-            <label className="sort-label" for="sortSelect">Sort by:</label>
+            <label className="sort-label" htmlFor="sortSelect">Sort by:</label>
             <select className="sort-select" onChange={props.sortHandler} value={props.sort} id="sortSelect">
                 <option value="1">Recent first</option>
                 <option value="2">Older First</option>

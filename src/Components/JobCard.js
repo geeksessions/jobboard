@@ -50,6 +50,7 @@ class JobCard extends React.Component {
   }
 
   render() {
+  
     let job = this.props.job.doc;
   //  let moment = require('moment');
     moment().format();

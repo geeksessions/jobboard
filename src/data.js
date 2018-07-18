@@ -4,21 +4,6 @@ const remoteDB = new PouchDB("http://localhost:5984/jobboard");
 
 const myDB = PouchDB('jobboard')
 
-// function Job () {
-//   return {
-//     id: 1,
-//     raw: 'hcueihfgeuorhfioerhfier',
-//     poster: "miguelcoquet",
-//     links: []
-//   }
-// }
-
-// function Poster () {
-//   return {
-//     id: "miguelcoquet",
-//   }
-// }
-
 const setupDataListening = (link, dispatch) => {
   return link.on('change', (changeObj) => {
     pullJobsAndPushToRedux(myDB, dispatch)

@@ -7,6 +7,7 @@ import DataSort from '../Components/DataSort';
 class Home extends React.Component {
 
   renderJobList = () => {
+    console.log(this.props)
     let jobs = this.props.jobs;
     let results = [];
 
@@ -21,7 +22,7 @@ class Home extends React.Component {
     }
     
     return results.map((job, i) => {
-      return <JobCard job={job} key={i} />
+      return <JobCard key={i} />
     })
   }
 
@@ -76,8 +77,7 @@ class Home extends React.Component {
 
     return results;
   }
-
-  
+ 
   
   render() {
     return (
